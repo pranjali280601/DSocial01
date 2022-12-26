@@ -1,5 +1,5 @@
 const jwt=require("jsonwebtoken")//gives unique tokens to each user to log in
-const {JWT_SECRET}=require('../config/keys')
+
 const mongoose=require('mongoose')
 const User=mongoose.model("User")
 mongoose.set('useFindAndModify', false);
@@ -11,7 +11,7 @@ module.exports=(req,res,next)=>{
 
     }
     const token=authorization.replace("Bearer ","")// separating the token from the string
-    jwt.verify(token,JWT_SECRET,(err,payload)=>{// verifying that token belongs to the same user
+    jwt.verify(token,process.env.JWT_SECRET,(err,payload)=>{// verifying that token belongs to the same user
         if(err){
             return res.status(401).json({error:"You must be logged in"})
         }
