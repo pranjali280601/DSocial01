@@ -1,14 +1,27 @@
 import React, { useState,useEffect, useContext } from 'react';
 import {UserContext} from '../../App'
-import {Link} from 'react-router-dom'
+import {Link, useParams} from 'react-router-dom'
 import desktopImage from '../../img/b8.jpg'
 import mobileImage from '../../img/mobileImage.jpg'
+import ComputerScience from '../../img/ComputerScience.jpeg'
+import Electrical from '../../img/Electrical.jpg'
+import Electronics from '../../img/Electronics.jpg'
+import Mechanical from '../../img/Mechanical.jpg'
+import Biotechnology from '../../img/Biotechnology.jpg'
+import Dance from '../../img/Dance.jfif'
+import Music from '../../img/Music.jpg'
+import Literature from '../../img/Literature.jfif'
+import Miscellaneous from '../../img/Miscellaneous.jpg'
 import Spaces from '../Spaces'
+
 // import CommentIcon from '@mui/icons-material/Comment';
-const Home=()=>{
+const Space=()=>{
     const [data,setData]=useState([])
     const {state,dispatch}=useContext(UserContext)
     const [newComment, setNewComment] = useState();
+    const {spaceid}= useParams()
+
+
     const useWindowWidth = () => {
         const [windowWidth, setWindowWidth ] = useState(window.innerWidth);
       
@@ -25,16 +38,37 @@ const Home=()=>{
       };
 
     const imageUrl = useWindowWidth() >= 650 ? desktopImage : mobileImage;
+
+    let spaceimg ="";
+    if(spaceid=="ComputerScience")
+    spaceimg = ComputerScience;
+    else if(spaceid=='Electronics')
+    spaceimg = Electronics;
+    else if(spaceid=='Electrical')
+    spaceimg = Electrical;
+    else if(spaceid=='Biotechnology')
+    spaceimg = Biotechnology;
+    else if(spaceid=='Mechanical')
+    spaceimg = Mechanical;
+    else if(spaceid=='Music')
+    spaceimg = Music;
+    else if(spaceid=='Dance')
+    spaceimg = Dance;
+    else if(spaceid=='Literature')
+    spaceimg = Literature;
+    else 
+    spaceimg = Miscellaneous;
+
     useEffect(()=>{
-        fetch("/allposts",{
+        fetch(`/spaces/${spaceid}`,{
             headers:{
                 "Authorization":"Bearer "+localStorage.getItem("jwt")
             }
         }).then(res=>res.json())
             .then(result=>{
-                console.log(result)
-                setData(result.posts)
-                console.log("data", data)
+                console.log("space",result)
+                setData(result)
+                
             })   
     },[])
 
@@ -145,12 +179,23 @@ const Home=()=>{
        
         <div className="App-home" style={{backgroundImage: `url(${desktopImage})`}}>
         <div className="container">
-            
+        <div className="row">
+        <div className="card space-card" >
+         <div className='card-content' style={{position:"relative"}}>
+
+                            <div className="card-image">
+                             <img src={spaceimg} />
+                            <h1 style={{color:"white", textAlign:"center", fontFamily:"Righteous"}}>{spaceid}</h1>
+                            </div>
+        </div>
+            </div>
+        </div>
         
         
         <div className="row">
         <Spaces />
          <div className="col s12  N/A transparent">
+         
                  <div className="home">{
                          data.map(item=>{
                         console.log("it",item)
@@ -229,4 +274,4 @@ const Home=()=>{
 
 
 }
-export default Home
+export default Space

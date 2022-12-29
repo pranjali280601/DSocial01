@@ -19,12 +19,12 @@ const transporter=nodemailer.createTransport(sendgridTransport({
 }))
 
 router.post('/signup',(req,res)=>{
-    const{name,email,password,pic}=req.body
-    if(!email || !name || !password)
+    const{name,email,password,pic, rollno, mobile}=req.body
+    if(!email || !name || !password || !mobile)
     {
        return res.status(422).json({error:'Please add all credentials'})
     }
-    User.findOne({email:email})
+    User.findOne({rollno:rollno})
     .then((savedUser)=>{
         if(savedUser){
             return res.status(422).json({error:"User email already exists"})
@@ -34,6 +34,8 @@ router.post('/signup',(req,res)=>{
                 email,
                 password:hashedpassword,
                 name,
+                rollno,
+                mobile,
                 pic
             })
             user.save()
@@ -56,26 +58,26 @@ router.post('/signup',(req,res)=>{
     })
 })
 router.post('/signin',(req,res)=>{
-    const{email,password}=req.body
-    if(!email || !password)
+    const{rollno,password}=req.body
+    if(!rollno || !password)
     {
        return res.status(422).json({error:'Please add all credentials'})
     }
-    User.findOne({email:email})
+    User.findOne({rollno:rollno})
     .then((savedUser)=>{
         if(!savedUser){
-            return res.status(422).json({error:"Incorrect email or password"})
+            return res.status(422).json({error:"Incorrect Roll Number or password"})
         }
         bcrypt.compare(password,savedUser.password)
         .then(doMatch=>{
             if(doMatch){
                 const token=jwt.sign({_id:savedUser._id},process.env.JWT_SECRET)
-                const {_id,name,email,followers,following,pic}=savedUser
-                res.json({token,user:{_id,name,email,followers,following,pic}})
+                const {_id,name,rollno,followers,following,pic, email, mobile}=savedUser
+                res.json({token,user:{_id,name,rollno,mobile,followers,following,pic, email}})
                 //res.json({message:"Successfully signed in"})
             }
             else{
-                return res.status(422).json({error:"Incorrect email or password"})
+                return res.status(422).json({error:"Incorrect Roll Number or password"})
             }
         })
    

@@ -2,13 +2,13 @@ import React,{useState,useContext, useEffect} from 'react';
 import {Link,useHistory} from 'react-router-dom'
 import M from 'materialize-css'
 import { UserContext } from '../../App'
-import desktopImage from '../../img/desktopImage.jpg'
+import desktopImage from '../../img/b6.jpg'
 import mobileImage from '../../img/mobileImage.jpg'
 const SignIn=()=>{
     const {state,dispatch}=useContext(UserContext)
     const history=useHistory()
     const[password,setPassword]=useState("")
-    const[email,setEmail]=useState("")
+    const[rollno,setrollno]=useState("")
     const useWindowWidth = () => {
         const [windowWidth, setWindowWidth ] = useState(window.innerWidth);
       
@@ -26,10 +26,6 @@ const SignIn=()=>{
 
     const imageUrl = useWindowWidth() >= 650 ? desktopImage : mobileImage;
     const PostData=()=>{
-        if (! /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email))
-        {
-          return M.toast({html: "Invalid email",classes:"#f44336 red"})
-        }
         
         fetch("/signin",{
             method:"post",
@@ -38,7 +34,7 @@ const SignIn=()=>{
             },
             body:JSON.stringify({
             
-                email,
+                rollno,
                 password
             })
             
@@ -69,12 +65,12 @@ const SignIn=()=>{
         <div className="col s6">
         <div className='mycard'>
             <div className='card auth-card input-field ' >
-                <h2 style={{color:"black"}}>SocialUp</h2>
+                <h2 style={{color:"black", fontSize:"75px"}}>DSocial</h2>
                 <input style={{color:"black"}}
                 type="text"
-                placeholder="email"
-                value={email}
-                onChange={(e)=>setEmail(e.target.value)}
+                placeholder="Roll Number"
+                value={rollno}
+                onChange={(e)=>setrollno(e.target.value)}
                 />
                 <input 
                 type="password"

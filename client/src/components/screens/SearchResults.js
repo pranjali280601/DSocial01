@@ -2,7 +2,7 @@ import React, { useState,useEffect, useContext } from 'react';
 import {UserContext} from '../../App'
 import {Link} from 'react-router-dom'
 import {useParams}  from 'react-router-dom'
-import desktopImage from '../../img/bg3.jpg'
+import desktopImage from '../../img/b8.jpg'
 import mobileImage from '../../img/mobileImage.jpg'
 // import CommentIcon from '@mui/icons-material/Comment';
 const SearchResults=()=>{

@@ -10,6 +10,13 @@ const userSchema=new mongoose.Schema({
         type:String,
         required:true
     },
+    rollno:{
+        type: String,
+    },
+    mobile:{
+        type: Number,
+        required: true
+    },
     password:{
         type:String,
         required:true

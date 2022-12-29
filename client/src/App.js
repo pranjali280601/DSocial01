@@ -15,7 +15,7 @@ import  SubscribedUserPosts from './components/screens/SubscribedUserPosts'
 import desktopImage from './img/desktopImage.jpg'
 import mobileImage from './img/mobileImage.jpg'
 import SearchResults from './components/screens/SearchResults';
-
+import Space from './components/screens/Space'
 
 export const UserContext=createContext()
 
@@ -71,10 +71,9 @@ const Routing=()=>{
       <Route exact path="/reset/:token">
       <NewPassword />
       </Route>
-      <Route exact path="/myfollowingpost">
-      <SubscribedUserPosts />
+      <Route exact path="/spaces/:spaceid">
+      <Space />
       </Route>
-      
       <Route exact path="/">
       <Home />
       </Route>
@@ -84,9 +83,6 @@ const Routing=()=>{
 
   )
 }
-
-
-
 function App() {
   const [state,dispatch]= useReducer(reducer, initialState)
   const imageUrl = useWindowWidth() >= 650 ? desktopImage : mobileImage;

@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@100;400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script&family=Lobster+Two&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@300&family=Squada+One&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
 
 
 ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
@@ -10,7 +10,7 @@
 }
 
 a{
-  color:black !important
+  color:black
 }
 h2{
   font-family: "Roboto Mono";
@@ -21,8 +21,11 @@ h2{
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  background-position: top center;
-    
+background-position: top center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+    /* opacity: 0.5; */
 
   /* background: url("https://i.pinimg.com/originals/ec/a8/9a/eca89af3c15d4e1fe509baac34517f25.jpg") no-repeat center center fixed; 
   
@@ -33,8 +36,18 @@ h2{
 }
 
 .App-home{
-  background: url("https://i.pinimg.com/originals/ec/a8/9a/eca89af3c15d4e1fe509baac34517f25.jpg") no-repeat center center fixed; 
-  
+  /* height: 100vh; */
+  /* opacity: 0.90; */
+  background-attachment: fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+.App-post{
+  height: 100vh;
+  /* opacity: 0.90; */
+  background-attachment: fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -111,6 +124,13 @@ h2{
 
 .home-card{
   max-width: 500px;
+  height: max-content;
+  margin:26px auto;
+
+}
+.space-card{
+  background-color: black;
+  max-width: 100%;
   height: max-content;
   margin:26px auto;
 

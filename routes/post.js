@@ -5,6 +5,20 @@ const requireLogin = require('../middlewares/requireLogin')
 const Post = mongoose.model('Post') 
 mongoose.set('useFindAndModify', false);
 
+
+
+
+var ComputerScience = ['63adaf3afd30163874d07f4c', '63adaadcfd30163874d07f4b']
+var Electronics = ['63ad942b45d00749648a1dd7']
+var Electrical = []
+var Biotechnology = []
+var Mechanical = []
+var Music = []
+var Dance = []
+var Literature = []
+var Miscellaneous = ['63ad942b45d00749648a1dd7']
+ 
+
 router.get('/allposts',requireLogin,(req,res)=>{
     Post.find() // displays all the posts in the table but doesn't display that who posted it
     .populate("postedBy","_id name pic") //therefore we mention it explicitly using the populate function
@@ -18,20 +32,52 @@ router.get('/allposts',requireLogin,(req,res)=>{
     })
 })
 
+router.get('/getspaces',requireLogin,(req,res)=>{
+    try{
+        res.json({ComputerScience, Electrical, Electronics, Dance, Music, Literature, Miscellaneous, Mechanical, Biotechnology});
+    }
+    catch(err){
+        console.log(err);
+    }
+})
 router.post('/createpost',requireLogin,(req,res)=>{ // passing middleware to makesure the user is logged in
-    const{title,body,pic}=req.body // getting the title and body from the user
-    if(!title || !body ){
+    const{title,body,pic, tags}=req.body // getting the title and body from the user
+    if(!title || !body || !tags ){
         return res.status(422).json({error:"Please add all fields"})
     }
+    console.log(tags)
     req.user.password=undefined // *hence we set the password undefined so it doesn't gets displayed
      const post=new Post({  //creating a new post in the Post schema
         title,
         body,
         photo:pic,
+        tags,
         postedBy:req.user //gives even the pswd of the user therefore go to *
      })
      post.save().then(result=>{
          res.json({post:result})
+         
+         for (let i = 0; i < tags.length; i++) {
+            if(tags[i]=='Computer Science')
+            ComputerScience.push(result._id);
+            else if (tags[i]=='Electronics & Communication')
+            Electronics.push(result._id)
+            else if (tags[i]=='Electrical')
+            Electrical.push(result._id)
+            else if (tags[i]=='Biotechnology')
+            Biotechnology.push(result._id)
+            else if (tags[i]=='Mechanical')
+            Mechanical.push(result._id)
+            else if (tags[i]=='Music')
+            Music.push(result._id)
+            else if (tags[i]=='Dance')
+            Dance.push(result._id)
+            else if (tags[i]=='Literature')
+            Literature.push(result._id)
+            else
+            Miscellaneous.push(result._id)
+          }
+
      })
      .catch(err=>{
          console.log(err)
@@ -41,6 +87,7 @@ router.post('/createpost',requireLogin,(req,res)=>{ // passing middleware to mak
 router.get('/mypost',requireLogin,(req,res)=>{
     Post.find({postedBy:req.user._id})
     .populate("postedBy","_id name")
+    .populate("comments.postedBy","_id name")
     .then(mypost=>{
         res.json({mypost})
     })
@@ -155,5 +202,44 @@ router.get("/posts/:id",requireLogin,(req,res)=>{
         console.log(err)
     })
 })
+router.get("/spaces/:spaceid",(req,res)=>{
+    spaceid = req.params.spaceid;
+    if(spaceid=="ComputerScience")
+    arr = ComputerScience;
+    else if(spaceid=='Electronics')
+    arr = Electronics;
+    else if(spaceid=='Electrical')
+    arr = Electrical;
+    else if(spaceid=='Biotechnology')
+    arr = Biotechnology;
+    else if(spaceid=='Mechanical')
+    arr = Mechanical;
+    else if(spaceid=='Music')
+    arr = Music;
+    else if(spaceid=='Dance')
+    arr = Dance;
+    else if(spaceid=='Literature')
+    arr = Literature;
+    else 
+    arr = Miscellaneous;
+
+    let ans = [];
+    res.setHeader('Content-Type', 'text/html');
+    for(let i = 0; i<arr.length; i++){
+        Post.findOne({_id:arr[i]})
+    .populate("postedBy","_id name pic")
+        .then((post)=>{
+            ans.push(post)
+            // res.write(JSON.stringify(post))
+            
+    }).catch(err=>{
+        console.log(err)
+    })
+    }
+    setTimeout(()=> res.send(ans), 800)
+    
+   
+})
+
 
 module.exports=router

@@ -22,10 +22,10 @@ const NavBar=()=>{
   const renderList=()=>{
     if(state){
       return [
-        <li key="1"><i data-target="modal1" className="large material-icons modal-trigger" style={{color:"black"}}>search</i></li>,
+        <li key="1"><i data-target="modal1" className="large material-icons modal-trigger" style={{color:"white"}}>search</i></li>,
         <li key="2" ><Link to="/profile" style={{fontFamily:"Squada One", fontSize:"20px"}}>Profile</Link></li>,
         <li key="3"><Link to="/createpost" style={{fontFamily:"Squada One", fontSize:"20px"}}>Create Post</Link></li>,
-        <li key="4"><Link to="/myfollowingpost" style={{fontFamily:"Squada One", fontSize:"20px"}}>Explore</Link></li>,
+        <li key="4"><Link to="/" style={{fontFamily:"Squada One", fontSize:"20px"}}>Explore</Link></li>,
        
         <li key="5">
         <button className="btn waves-effect waves-#000000 black" 
@@ -72,18 +72,18 @@ const NavBar=()=>{
       <>
       <div>
              <nav>
-        <div className="nav-wrapper #fffde7 yellow lighten-5">
+        <div className="nav-wrapper #000000 black">
           <div style={{
              maxWidth:"850px",margin:"0px auto" }}>
-          <Link to={state?"/":"/signin"} className="brand-logo left" style={{fontSize:"40px"}}>DSocial</Link>
-          <Link to={state?"/":"/signin"} data-target="mobile-demo" className="sidenav-trigger"><i className="material-icons side" style={{position:'relative',right:"-800px"}}>menu</i></Link >
+          <Link to={state?"/":"/signin"} className="brand-logo left" style={{fontSize:"40px", color:"white"}}>DSocial</Link>
+          <Link to={state?"/":"/signin"} data-target="mobile-demo" className="sidenav-trigger" style={{color:"white"}}><i className="material-icons side" style={{position:'relative',right:"-800px", color:"white"}}>menu</i></Link >
           <ul className="right hide-on-med-and-down" ref={sideTrigger}>
             {renderList()}
             </ul>
         
 
        
-        <div id="modal1" className="modal" ref={searchModal} style={{color:"black"}}>
+        <div id="modal1" className="modal" ref={searchModal} style={{backgroundColor:"white"}}>
           <div className="modal-content">
             <input 
                 type="text"

@@ -2,7 +2,7 @@ import React,{useState,useEffect} from 'react';
 import {Link} from 'react-router-dom'
 import {useHistory} from 'react-router-dom'
 import M from 'materialize-css'
-import desktopImage from '../../img/desktopImage.jpg'
+import desktopImage from '../../img/b6.jpg'
 import mobileImage from '../../img/mobileImage.jpg'
 
 
@@ -13,6 +13,8 @@ const SignUp=()=>{
     const[password,setPassword]=useState("")
     const[email,setEmail]=useState("")
     const[image,setImage]=useState("")
+    const[mobile,setMobile]=useState("")
+    const[rollno,setRollno]=useState("")
     const[url,setUrl]=useState(undefined)
     
 
@@ -70,6 +72,8 @@ const uploadProfilePic=()=>{
                 name,
                 email,
                 password,
+                mobile,
+                rollno,
                 pic:url
             })
             
@@ -101,9 +105,9 @@ const uploadProfilePic=()=>{
         <div className="container">
             <div className="row">
         <div className="col s12">
-        <div className='mycard'>
-            <div className='card auth-card input-field'>
-                <h2 style={{color:"black"}}>SocialUp</h2>
+        <div className='mycard' >
+            <div className='card auth-card input-field' style={{top:"-72px"}}>
+            <h2 style={{color:"black", fontSize:"65px", marginTop:"10px"}}>DSocial</h2>
                 <input 
                 type="text"
                 placeholder="Username"
@@ -115,6 +119,18 @@ const uploadProfilePic=()=>{
                 placeholder="Email"
                 value={email}
                 onChange={(e)=>setEmail(e.target.value)}
+                />
+                <input 
+                type="text"
+                placeholder="Roll Number"
+                value={rollno}
+                onChange={(e)=>setRollno(e.target.value)}
+                />
+                <input 
+                type="text"
+                placeholder="Mobile Number"
+                value={mobile}
+                onChange={(e)=>setMobile(e.target.value)}
                 />
                 <input 
                 type="password"
