@@ -1,5 +1,6 @@
 import React,{useState,useContext} from 'react';
 import {Link,useHistory} from 'react-router-dom'
+import desktopImage from '../../img/b8.jpg'
 import M from 'materialize-css'
 
 const Reset=()=>{
@@ -45,10 +46,12 @@ const Reset=()=>{
         
     }
     return(
-        
+        <div className='App-post' style={{backgroundImage: `url(${desktopImage})`}}>
+            <div className="container">
+          <div className="row">
         <div className='mycard'>
             <div className='card auth-card input-field'>
-                <h2>Instagram</h2>
+                <h2>DSocial</h2>
                 
                 <input 
                 type="text"
@@ -56,14 +59,16 @@ const Reset=()=>{
                 value={email}
                 onChange={(e)=>setEmail(e.target.value)}
                 />
-                <button className="btn waves-effect waves-#00b8d4 cyan accent-4"
+                <button className="btn waves-effect black"
                 onClick={()=>PostData()}>
                     Reset Password
                 </button>
                 
             </div>
         </div>
-        
+        </div>
+        </div>
+        </div>
     )
 
 

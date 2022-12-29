@@ -22,11 +22,11 @@ const NavBar=()=>{
   const renderList=()=>{
     if(state){
       return [
-        <li key="1"><i data-target="modal1" className="large material-icons modal-trigger" style={{color:"white"}}>search</i></li>,
-        <li key="2" ><Link to="/profile" style={{fontFamily:"Squada One", fontSize:"20px"}}>Profile</Link></li>,
-        <li key="3"><Link to="/createpost" style={{fontFamily:"Squada One", fontSize:"20px"}}>Create Post</Link></li>,
-        <li key="4"><Link to="/" style={{fontFamily:"Squada One", fontSize:"20px"}}>Explore</Link></li>,
-       
+        <li key="1"><i data-target="modal1" className="large material-icons modal-trigger" style={{color:"white", cursor:"pointer"}}>search</i></li>,
+        
+        <li key="2"><Link to="/createpost" style={{fontFamily:"Squada One", fontSize:"20px"}}>Create Post</Link></li>,
+        <li key="3"><Link to="/" style={{fontFamily:"Squada One", fontSize:"20px"}}>Explore</Link></li>,
+        <li key="4" ><Link to="/profile" style={{fontFamily:"Squada One", fontSize:"20px"}}>{state.name}</Link></li>,
         <li key="5">
         <button className="btn waves-effect waves-#000000 black" 
         

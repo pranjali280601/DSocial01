@@ -8,6 +8,7 @@ import Spaces from '../Spaces'
 const Home=()=>{
     const [data,setData]=useState([])
     const {state,dispatch}=useContext(UserContext)
+    const [update, setUpdate]=useState(false);
     const [newComment, setNewComment] = useState();
     const useWindowWidth = () => {
         const [windowWidth, setWindowWidth ] = useState(window.innerWidth);
@@ -36,7 +37,7 @@ const Home=()=>{
                 setData(result.posts)
                 console.log("data", data)
             })   
-    },[])
+    },[data])
 
     const likePost=(id)=>{
         console.log("OLD", data)
@@ -60,6 +61,7 @@ const Home=()=>{
                    return item
                })
                setData(newData)
+               
                console.log("New",data)
             }).catch(err=>{
                 console.log(err)
@@ -87,6 +89,7 @@ const Home=()=>{
                         return item
                     })
                     setData(newData)
+                    
                 }).catch(err=>{
                     console.log(err)
                 }) 
@@ -120,24 +123,6 @@ const Home=()=>{
             }) 
     }
 
-    const deletePost=(postid)=>{
-   
-        fetch(`/deletepost/${postid}`,{
-            method:"delete",
-            headers:{
-                "Authorization":"Bearer "+localStorage.getItem("jwt")
-            }
-        }).then(res=>res.json())
-            .then(result=>{
-                console.log(result)
-                const newData=data.filter(item=>{
-                    return item._id !== result._id
-                })
-                setData(newData)
-             }).catch(err=>{
-                 console.log(err)
-             }) 
-        }
         
     
 
@@ -152,7 +137,7 @@ const Home=()=>{
         <Spaces />
          <div className="col s12  N/A transparent">
                  <div className="home">{
-                         data.map(item=>{
+                         data && data.map(item=>{
                         console.log("it",item)
                         return(
                             
@@ -190,10 +175,10 @@ const Home=()=>{
                             
                             {
                             item.likes.includes(state._id)?
-                            <i className="material-icons" style={{color:"red", fontSize:"30px"}} onClick={()=>{ unlikePost(item._id)}}>favorite</i>
-                            : <i className="material-icons" style={{color:"black", fontSize:"30px"}} onClick={()=>{likePost(item._id)}}>favorite_border</i>
+                            <i className="material-icons" style={{color:"red", fontSize:"30px", cursor:"pointer"}} onClick={()=>{ unlikePost(item._id)}}>favorite</i>
+                            : <i className="material-icons" style={{color:"black", fontSize:"30px", cursor:"pointer"}} onClick={()=>{likePost(item._id)}}>favorite_border</i>
                              }
-                            <i className="material-icons" style={{color:"black", marginLeft:"13px", fontSize:"30px"}} onClick={()=>{likePost(item._id)}}>comment_icon</i>
+                            <i className="material-icons" style={{color:"black", marginLeft:"13px", fontSize:"30px", cursor:"pointer"}} onClick={()=>{likePost(item._id)}}>comment_icon</i>
                             <h6 style={{color:"black", fontSize:"14px"}}>{item.likes.length} likes</h6>
                             
                             
@@ -205,11 +190,17 @@ const Home=()=>{
                             
                             })
                             }
-                          
+                          {/* <form onSubmit={(e)=>{
+                            e.preventDefault()
+                            makeComment(e.target[0].value,item._id)
+                         }}>
+                        <input type="text" placeholder="Add a comment" />
+                        </form> */}
                             <input type="text" 
                             placeholder="Add a comment"
                             value={newComment}
-                            onChange={(e)=>setNewComment(e.target.value)} />
+                            onChange={(e)=>{e.preventDefault()
+                            setNewComment(e.target.value)}} />
                             <button onClick={()=>makeComment(item._id)}>Post</button>
                     
                             </div>

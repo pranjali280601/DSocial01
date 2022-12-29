@@ -120,6 +120,7 @@ const CreatePost=()=>{
             console.log(err)
         })
       }
+      setTimeout(500);
         console.log(spaceName)
         if(flag || url){
           console.log("executed")
